@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Array map</h1>
+    <ul id="list" type="none">
+    </ul>
+
+    <table id="tbl" border=2>
+    </table>
+    <script src="map-exercise.js"></script>
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            let list="";
+            let table="<tr><th>Subject</th><th>Marks</th></tr>";
+            let total =0;
+            
+            subjectArray.filter(m=>m.value>=80).sort((x,y)=>x.value-y.value).map(element=>{
+                // for(value in element){
+                // list+="<tr><th>Marks</th><th>Subject</th><tr><td>"+element.subject+"</td><td>"+element.marks+"</td>";
+            list+= "<li>"+element.key+"="+element.value+"</li>";
+
+            table+=`<tr><td> ${element.key}</td><td> ${element.value} </td></tr>`;
+            total+=element.value;
+        });
+        table+=`<tr><td>Total</td><td>${total}</td></tr>`;
+        $('#list').html(list);
+        $('#tbl').html(table);
+    });
+    </script>
+    <!-- abc -->
+</body>
+</html>

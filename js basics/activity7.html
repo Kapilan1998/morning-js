@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <table border="2">
+        <tr>
+            <th>Student ID</th>
+            <th>Student Name</th>
+            <th>Maths Marks</th>
+            <th>Science Marks</th>
+            <th>History Marks</th>
+        </tr>
+        <tr>
+            <td id="td1"></td>
+            <td id="td2"></td>
+            <td id="td3"></td>
+            <td id="td4"></td>
+            <td id="td5"></td>
+        </tr>
+    </table>
+</body>
+
+<script src="jquery-3.6.0.min.js"></script>
+<script>
+    function createStudent02(id, name, maths, science, history) {
+        let stu01 = {};
+        stu01.id = id;
+        stu01.name = name;
+        stu01.subject = {
+            maths,
+            science,
+            history
+        }
+        return stu01;
+    }
+
+    let id = window.prompt("Enter student id ");
+    let name = window.prompt("Enter student name ");
+    let maths = window.prompt("Enter student Maths marks ");
+    let science = window.prompt("Enter student Science marks ");
+    let history = window.prompt("Enter student History marks ");    
+
+    let studentArray = [];
+
+    for (let i = 0; i < localStorage.length; i++) {
+        studentArray[i] = createStudent02(id,name, maths, science, history);
+
+    
+
+    localStorage.setItem("s1", JSON.stringify(studentArray[i]));
+    document.write(localStorage.getItem("s1"));
+    // localStorage.setItem("name", JSON.stringify(name));
+    // document.write(localStorage.getItem("name"));
+    // localStorage.setItem("maths", JSON.stringify(maths));
+    // document.write(localStorage.getItem("maths"));
+    // localStorage.setItem("science", JSON.stringify(science));
+    // document.write(localStorage.getItem("science"));
+    // localStorage.setItem("history", JSON.stringify(history));
+    // document.write(localStorage.getItem("history"));
+    // localStorage.clear();
+
+    }
+
+
+
+    // sessionStorage.setItem("id", id);
+    // document.write(sessionStorage.getItem("id"));   
+    // sessionStorage.setItem("name", name);
+    // document.write(sessionStorage.getItem("name"));
+    // sessionStorage.setItem("maths", maths);
+    // document.write(sessionStorage.getItem("maths"));
+    // sessionStorage.setItem("science", science);
+    // document.write(sessionStorage.getItem("science"));
+    // sessionStorage.setItem("history", history);
+    // document.write(sessionStorage.getItem("history"));
+    // sessionStorage.clear();
+</script>
+
+</html>

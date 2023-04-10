@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+    <h3>Enter details</h3>
+    <form action="" method="post">
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-3">
+                Student ID<input type="text" name="id" id="id" class="form-control">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-3">
+                Student name<input type="text" name="name" id="name" class="form-control">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2"></div>
+            <div class="col-3">
+                Student age<input type="text" name="name" id="age" class="form-control"> <br> 
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-2"> </div>
+            <div class="col-2">
+                <input type="button" value="Convert" name="convert" id="convert" class="btn btn-success">
+                <input type="reset" value="clear" class="btn btn-secondary">
+            </div>
+        </div>
+    </form>
+<br> <br>
+    <table border=5  class="table table-striped table-hover" style="display: none;" id="mytable">
+        <tr class="d-flex" align="center">
+            <th class="table-danger col-6">Key</th>
+            <th class="table-danger col-6">Value</th>
+        </tr>
+        <tr class="d-flex" align="center">
+            <td class="col-6">Student id</td>
+            <td id="td1" class="col-6"></td>
+        </tr>
+        <tr class="d-flex" align="center">
+            <td class="col-6">Student name</td>
+            <td class="col-6" id="td2"></td>
+        </tr>
+        <tr class="d-flex" align="center">
+            <td class="col-6">Student age</td>
+            <td class="col-6" id="td3"></td>
+        </tr>
+    </table>
+</body>
+<script src="jquery-3.6.0.min.js"></script>
+        <script> 
+        $(document).ready(function(){
+            $('#convert').click(function(){
+                $('#mytable').fadeIn(2000);
+
+                function storeDetails(id,name,age){
+                    return{
+                    id:$('#id').val(),  
+                    name:$('#name').val(),
+                    age:$('#age').val(),
+                    }
+                }
+                let stu_id=$('#id').val();
+                let stu_name=$('#name').val();
+                let stu_age=$('#age').val();
+                let stu01= storeDetails(stu_id,stu_name,stu_age);
+                // for(stu_id in stu01){
+                    // $('#td1').val()
+                    $('#td1').html(stu01.id);
+                    $('#td2').html(stu01.name);
+                    $('#td3').html(stu01.age);
+
+                // }
+            });
+        });
+        
+        </script>
+</html>

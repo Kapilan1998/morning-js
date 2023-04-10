@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <table>
+        <tr>
+            <td>
+                <form action="" id="frm">
+                    <label for="id">Student ID</label>
+                    <input type="number" id="id" required> <br>
+                    <label for="name">Student Name</label>
+                    <input type="text" id="name" required> <br>
+                    <label for="maths">Maths marks</label>
+                    <input type="number" id="maths" required min="0" max="100"> <br>
+                    <label for="science">Science marks</label>
+                    <input type="number" id="science" required min="0" max="100"> <br>
+                    <label for="english">English marks</label>
+                    <input type="number" id="english" required min="0" max="100"> <br>
+                    <input type="submit" value="Save">
+                </form>
+            </td>
+
+            <td id="display-table"></td>
+
+        </tr>
+    </table>
+
+    <button id="display-data">Display</button>
+    <button id="maths-sort">sort by maths</button>
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            let initialValue = (localStorage.length) + 1;
+            let getMathsArray = [];
+            $('#frm').submit(function (e) {
+                e.preventDefault();
+                let formData = getFormData();
+
+                localStorage.setItem(initialValue, JSON.stringify(formData));
+                initialValue++;
+            });
+
+            $('#maths-sort').click(function () {
+                let table = `<table border=2>`;
+                table +=
+                    `<tr><th>Student ID</th><th>Student name</th><th>Maths marks</th><th>Science marks</th><th>English marks</th><th>Total</th><th>Average</th></tr>`;
+                let total = 0;
+                getMathsArray.sort((p, q) => p.maths - q.maths).map(detail => {
+                    total = parseInt(detail.maths) + parseInt(detail.science) + parseInt(detail
+                        .english);
+                    table += `<td>${detail.id}</td><td>${detail.name}</td><td>${detail.maths}</td><td>${detail.science}</td><td>${detail.english}</td><td>${total}</td><td>${total/3}</td></tr>`;
+
+                });
+                table += `</table>`;
+                $('#display-table').html(table);
+            });
+
+            $('#display-data').click(function (e) {
+
+                let table = `<table border=2>`;
+                table += `<tr><th>Student ID</th><th>Student name</th><th>Maths marks</th><th>Science marks</th><th>English marks</th><th>Total</th><th>Average</th></tr>`;
+                let total = 0;
+                getMathsArray = [];
+
+                for (i = 0; i < localStorage.length; i++) {
+                    table += `<tr>`;
+                    let k1 = localStorage.key(i);
+                    let getData = JSON.parse(localStorage.getItem(k1));
+                    getMathsArray.push(getData);
+                    console.log(getData);
+                    total = parseInt(getData.maths) + parseInt(getData.science) + parseInt(getData.english);
+                    table += `<td>${getData.id}</td>`;
+                    table += `<td>${getData.name}</td>`;
+                    table += `<td>${getData.maths}</td>`;
+                    table += `<td>${getData.science}</td>`;
+                    table += `<td>${getData.english}</td>`;
+                    table += `<td>${total}</td>`;
+                    table += `<td>${total/3}</td></tr>`;
+                }
+                table += `</table>`;
+                $('#display-table').html(table);
+            });
+        });
+
+        function getFormData() {
+            let id = $('#id').val();
+            let name = $('#name').val();
+            let maths = $('#maths').val();
+            let science = $('#science').val();
+            let english = $('#english').val();
+
+            let studentObject = {};
+
+            studentObject.id = id;
+            studentObject.name = name;
+            studentObject.maths = maths;
+            studentObject.science = science;
+            studentObject.english = english;
+
+            return studentObject;
+        }
+    </script>
+</body>
+
+</html>

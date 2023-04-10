@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form id="save-data">
+        <label for="id">ID</label>
+        <input type="number" id="id">
+        <br>
+        <label for="lname">Name</label>
+        <input type="text" id="fname">
+        <br>
+        <label for="age">Age</label>
+        <input type="text" id="age">
+        <br>
+        <label for="maths">Maths</label>
+        <input type="number" id="maths">
+        <br>
+        <label for="history">History</label>
+        <input type="number" id="history">
+        <br>
+        <label for="ict">ICT</label>
+        <input type="number" id="ict">
+        <br>
+        <input type="submit">
+    </form>
+    <div id="student-info">
+
+    </div>
+    <button>Get Data</button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+       
+
+        $(document).ready(function () {
+            let $k = 1;
+            $('#save-data').submit(function (e) {
+                e.preventDefault();
+                $k++;
+                let ids = $('#id').val();
+                let age = $('#age').val();
+                let name = $('#fname').val();
+                let maths = $('#maths').val();
+                let history = $('#history').val();
+                let ict = $('#ict').val();
+                let stu = {
+                    id: ids,
+                    name: name,
+                    age: age,
+                    maths: maths,
+                    history: history,
+                    ict: ict
+                };
+                localStorage.setItem($k, JSON.stringify(stu));
+            });
+            $('button').click(function () {
+                let table =
+                    '<table border="1" <tr><th>ID</th><th>Name</th><th>Age</th><th>Maths</th><th>History</th><th>ICT</th><th>Total</th><th>Avg</th><th>Result</th></tr>';
+                let avg=0; let result="";
+                for (i = 0; i < localStorage.length; i++) {
+                    let total = 0;
+                    let k = localStorage.key(i);
+                    let stuObject = JSON.parse(localStorage.getItem(k));
+                    let m1= parseInt(stuObject.maths);
+                    let m2= parseInt(stuObject.history);
+                    let m3= parseInt(stuObject.ict);
+                    // let m1= stuObject.maths;
+                    // let m2= stuObject.history;
+                    // let m3=stuObject.ict;
+                 //   total+=(+m1)+(+m2)+(+m3);
+                 total+=(m1)+(m2)+(m3);
+                 avg=total/3;
+                 if(avg>=75){
+                     result="pass";
+                    
+                 }else{
+                     result="fail";
+                 }
+                    table += '<tr>';
+                    table += `<td>${stuObject.id}</td>`;
+                    table += `<td>${stuObject.name}</td>`;
+                    table += `<td>${stuObject.age}</td>`;
+                    table += `<td>${m1}</td>`;
+                    table += `<td>${m2}</td>`;
+                    table += `<td>${m3}</td>`;
+                    table+=`<td>${total}</td>`;
+                    table+=`<td>${avg.toFixed(2)}</td>`;
+                    table+=`<td>${result}</td>`;
+                    
+                    table += '</tr>';
+                   
+                }
+                  
+                table += '</table>';
+                $('#student-info').html(table);
+
+            });
+        });
+    </script>
+</body>
+
+</html>

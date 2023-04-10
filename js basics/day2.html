@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn1">Click</button>
+    <button id="btn2">Click</button>
+    <button id="btn3">Click</button>
+    <button id="btn4">Click</button>
+    <button id="btn5">Click</button>
+    <br> <br>
+    <label for="number1">Number  1</label>
+    <input type="text" id="number1"> <br>
+    <label for="number2">Number  2</label>
+    <input type="text" id="number2"> <br>
+    <label for="result">Answer</label>
+    <input type="text" id="result"> <br>
+
+    <span id="msg"></span> <br>
+    <span id="msg1"></span> <br>
+    <script src="jquery-3.6.0.min.js">
+    </script>
+    <script>
+        $(document).ready(function() {
+            // console.log("hello");
+            $('#btn1').click(function() {
+                let num1 = $("#number1").val();
+                let num2 = $("#number2").val();
+                let result = Number(num1) + Number(num2);
+
+                $('#result').val(result);
+                $('#msg').text('<b><u>' + result + '</u></b>');
+                $('#msg1').html('<b><u>' + result + '</u></b>');
+
+            });
+            $('#btn3').click(function() {
+                alert("I am using jquery here !!!");
+            });
+        });
+    </script>
+</body>
+
+</html>

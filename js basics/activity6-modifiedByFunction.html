@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+    <form action="">
+        Above which marks you want to be filtered
+        <input type="text" id="txt1" class="form-control" style="width: 20%;"> <br>
+        <input type="button" value="Filter by" id="btn1" class="btn btn-success">
+        <input type="button" value="Sort by aescending order" id="btn2" class="btn btn-secondary">
+        <input type="button" value="Sort by descending order" id="btn3" class="btn btn-warning">
+    </form> <br>
+    <div class="row">
+        <div class="col-4">
+    <ul id="mylist" type="none" style="font-size:20px;"></ul>
+        </div>
+        <div class="col-8">
+            <table id="mytbl" border="2">
+            </table>
+        </div>
+    </div>
+    
+    <script src="map-exercise.js"></script>
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        function initialDisplay(myArray) {
+            let list = "";
+            let table = "<tr><th>SUBJECT NAME</th><th>MARKS</th></tr>";
+            let total = 0;
+
+            myArray.map(detail => {
+                list += `<li>${detail.key} = ${detail.value}</li>`;
+                // table += `<tr><td>${detail.key}</td><td>${detail.value}</td></tr>`;
+                            
+                if(detail.value>=50){
+                    table+=`<tr style="color:red;"><td>${detail.key}</td><td>${detail.value}</td></tr>`;
+                }else{
+                    table+=`<tr style="color:green;"><td>${detail.key}</td><td>${detail.value}</td></tr>`;
+                }
+                total += detail.value;
+            });
+            table +=`<tr><td>Total</td><td>${total}</td></tr><tr><td>Average</td><td>${total/myArray.length}</td></tr>`;
+            $('#mylist').html(list);
+            $('#mytbl').html(table);
+            // $('#mytbl').append(table);
+        }
+        $(document).ready(function () {
+            initialDisplay(subjectArray);
+        });
+
+        $('#btn1').click(function () {
+            let neededMark = $('#txt1').val();
+            let filtering = subjectArray.filter(m => m.value >= neededMark);
+            if (neededMark >= 90) {
+                initialDisplay(filtering);
+                $('table').css({'color': '#003366','background-color':'#e6f2ff','font-weight':500});
+            } else if (neededMark >= 80) {
+                initialDisplay(filtering);
+                $('table').css({'color': '#993366','background-color':'#e6f2ff','font-weight':500});
+            } else if (neededMark >= 70) {
+                initialDisplay(filtering);
+                $('table').css({'color': '#248f8f','background-color':'#e6f2ff','font-weight':500});
+            } else if (neededMark >= 60) {
+                initialDisplay(filtering);
+                $('table').css({'color': '#ff9933','background-color':'#e6f2ff','font-weight':500});
+            } else if (neededMark >= 50) {
+                initialDisplay(filtering);
+                $('table').css({'color': '#d633ff','background-color':'#f9ecec','font-weight':500});
+            } else if (neededMark >= 40) {
+                initialDisplay(filtering);
+                $('table').css({'color': '#ff1a8c','background-color':'#f9ecec','font-weight':800});
+            } else if(neededMark>=30){
+                initialDisplay(filtering);
+                $('table').css({'color': '#cc0000','background-color':'#f9ecec','font-weight':800});
+            }else{
+                initialDisplay(filtering);
+                $('table').css({'color': '#666600','background-color':'#f9ecec','font-weight':800});
+            }
+        });
+
+        $('#btn2').click(function () {
+            let neededMark = $('#txt1').val();
+            let aescendingOrder = subjectArray.filter(m => m.value >= neededMark).sort((x, y) => x.value - y.value);
+            initialDisplay(aescendingOrder);
+            $('#mytbl').after('<h3 style="color:Blue">This is in aescending order</h3>')
+            $('#mytbl').before('')
+
+        });
+
+        $('#btn3').click(function () {
+            let neededMark = $('#txt1').val();
+            let descendingOrder = subjectArray.filter(m => m.value >= neededMark).sort((x, y) => y.value - x.value);
+            initialDisplay(descendingOrder);
+            $('#mytbl').before('<h3 style="color:magenta">This is in descending order</h3>')
+            $('#mytbl').after('')
+
+
+        });
+    </script>
+</body>
+</html>

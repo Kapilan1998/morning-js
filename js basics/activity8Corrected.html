@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+</head>
+<body>
+    <form id="frm">
+        ID <input type="text" id="id">  <br>
+        Name <input type="text" id="name">  <br>
+        Maths marks<input type="text" id="maths"> <br>
+        Tamil marks  <input type="text" id="tamil">  <br>
+        English marks <input type="text" id="english"> <br>
+        <input type="submit" id="submit" value="save"> 
+        <input type="submit" id="sortMaths" value="sort by maths mark"> 
+        <input type="submit" id="sortTamil" value="sort by tamil mark"> 
+        <input type="submit" id="sortEnglish" value="sort by english mark"> 
+        
+    </form>
+    <button>show</button>
+<div id="detail">
+    </div>
+    
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            let $initialKey = 0;
+            let studentExamDetail=[];
+
+            $('#frm').submit(function(e){
+                e.preventDefault();
+                $initialKey++;
+
+                let id = $('#id').val();
+                let name = $('#name').val();
+                let mathsSubject = $('#maths').val();
+                let tamilSubject = $('#tamil').val();
+                let englishSubject = $('#english').val();
+                let total= Number(mathsSubject)+ Number(tamilSubject)+Number(englishSubject);
+                let average= total/3;
+                let result="";
+                if(average>=40){
+                    result="Pass"
+                }else{
+                    result="fail"
+                }
+                let stu = {
+                    id,
+                    name,
+                    mathsSubject,
+                    tamilSubject,
+                    englishSubject,
+                    total,
+                    average,
+                    result
+                };
+                // for(let x=0;x<localStorage.length;x++){
+                                                                // localStorage.setItem($initialKey, JSON.stringify(stu));         //*****
+                // }
+                // for(let y=0;y<localStorage.length;y++){
+                    studentExamDetail.push(localStorage.setItem($initialKey, JSON.stringify(stu)));         //*****
+                // }
+
+            });
+            $('button').click(function () {
+                let table =`<table border=2><tr><th>ID</th><th>Name</th><th>Maths</th><th>Tamil</th><th>English</th><th>Total</th><th>Average</th><th>Result</th></tr>`;
+                let average=0;
+                 let result="";
+                for (let i = 0; i < localStorage.length; i++) {
+                    let mykey = localStorage.key(i);            
+                    let stuObject = JSON.parse(localStorage.getItem(mykey));
+                    let mathsMark= Number(stuObject.mathsSubject);
+                    let tamilMark= Number(stuObject.tamilSubject);
+                    let englishMark= Number(stuObject.englishSubject);
+                    let total = 0;
+                 total+=(mathsMark)+(tamilMark)+(englishMark);
+                 average=total/3;
+                 if(average >=40){
+                     result="pass";
+                 }else{
+                     result="fail";
+                 }
+                    table += `<tr><td>${stuObject.id}</td><td>${stuObject.name}</td><td>${mathsMark}</td><td>${tamilMark}</td><td>${englishMark}</td><td>${total}</td><td>${average}</td><td>${result}</td></tr>`;
+                  }
+                table += `</table>`;
+                $('#detail').html(table);
+            });
+            $('#sortMaths').click(function(){
+                let table =`<table border=2><tr><th>ID</th><th>Name</th><th>Maths</th><th>Tamil</th><th>English</th><th>Total</th><th>Average</th><th>Result</th></tr>`;
+                    studentExamDetail.sort((p,q)=> p.mathsSubject-q.mathsSubject).map(detail => {
+                        table += `<tr><td>${detail.id}</td><td>${detail.name}</td><td>${detail.mathsSubject}</td><td>${detail.tamilSubject}</td><td>${detail.englishSubject}</td><td>${detail.total}</td><td>${detail.average}</td><td>${detail.result}</td></tr>`;
+                    });
+                $('#detail').html(table);
+            });
+            $('#sortTamil').click(function(){
+                
+            });
+            $('#sortEnglish').click(function(){
+                
+            });
+        });
+    </script>
+</body>
+</html>

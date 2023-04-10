@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form>
+        Enter colour 01<input type="text" id="color1"> <br>
+        Enter colour 02<input type="text" id="color2"> <br>
+        Enter colour 03<input type="text" id="color3"> <br>
+        Enter colour 04<input type="text" id="color4"> <br>
+        Enter colour 05<input type="text" id="color5"> <br>
+        Entered values  <textarea name="area" id="area" cols="10" rows="10"></textarea> <br>
+
+        <input type="button" value="store" id="store">
+        <!-- <input type="button" value="show" id="show"> -->
+    </form>
+</body>
+<script src="jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+                $('#store').click(function () {
+                        let col1 = $('#color1').val();
+                        let col2 = $('#color2').val();
+                        let col3 = $('#color3').val();
+                        let col4 = $('#color4').val();
+                        let col5 = $('#color5').val();
+
+                        let colorArray = new Array(col1, col2, col3, col4, col5);
+                        // $('#area').val(colorArray);
+                        for (let key1 of colorArray) {
+                        console.log(key1);                        }
+                    });
+                });
+</script>
+
+</html>

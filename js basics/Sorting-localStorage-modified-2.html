@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-3">
+            <br>
+            <form action="" id="frm">
+                <p id="title5">Insert student details</p>
+                <p id="title6" style="display: none;">update student details</p>
+                <div class="col-4"> Student ID </div>
+                <div class="col-8"><input type="number" id="id" class="form-control" required> </div> <br>
+
+                <div class="col-4"> Student Name </div>
+                <div class="col-8"><input type="text" id="name" class="form-control" required> </div> <br>
+
+                <div class="col-4">Maths marks</div>
+                <div class="col-8"><input type="number" id="maths" class="form-control" required min="0" max="100">
+                </div> <br>
+
+                <div class="col-4">Science marks</div>
+                <div class="col-8"><input type="number" id="science" class="form-control" required min="0" max="100">
+                </div> <br>
+
+                <div class="col-4"> English marks</div>
+                <div class="col-8"><input type="number" id="english" class="form-control" required min="0" max="100">
+                </div> <br>
+
+                <input type="submit" value="Save" class="btn btn-info"> <input type="reset" value="reset"
+                    class="btn btn-secondary">
+            </form>
+            <br> <br>
+
+            <button id="display-data" class="btn btn-outline-dark">Display</button>
+            <button id="maths-sort" class="btn btn-outline-dark">sort by maths</button>
+            <button id="science-sort" class="btn btn-outline-dark">sort by science</button>
+            <button id="english-sort" class="btn btn-outline-dark">sort by english</button>
+            <button id="average-sort" class="btn btn-outline-dark">sort by average</button>
+
+        </div>
+        <div class="col-8">
+            <br> <br>
+            <p id="title1" style="display: none; color:crimson; font-style: italic; font-weight: 600; font-size: 30px;">
+                Maths marks sorted list.....</p>
+            <p id="title2" style="display: none; color:crimson; font-style: italic; font-weight: 600; font-size: 30px;">
+                Science marks sorted list.....</p>
+            <p id="title3" style="display: none; color:crimson; font-style: italic; font-weight: 600; font-size: 30px;">
+                English marks sorted list.....</p>
+            <p id="title4" style="display: none; color:crimson; font-style: italic; font-weight: 600; font-size: 30px;">
+                Average sorted list.....</p>
+            <p id="display-table"></p>
+        </div>
+
+    </div>
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // let initialValue = (localStorage.length) + 1;
+            let getMathsArray = JSON.parse(localStorage.getItem('student-detail'));
+            $('#frm').submit(function (e) {
+                // let storage = JSON.parse(localStorage.getItem('student-detail'));
+                // if (storage !== null) {
+                //     getMathsArray = storage;
+                // }
+                e.preventDefault();
+                let formData = getFormData();
+                getMathsArray.push(formData);
+                localStorage.setItem('student-detail', JSON.stringify(getMathsArray));
+                // displayTable(getMathsArray);
+
+            });
+
+            function displayTable(myTable) {
+                let table = `<table border=2 class="table">`;
+                table +=
+                    `<tr class="table-primary"> <th>Record no</th> <th>Student ID</th> <th>Student Name</th> <th>Maths marks</th> <th>Science marks</th> <th>English marks</th> <th>Total</th> <th>Average</th> <th>Result</th> <th>Update</th> <th>delete</th></tr>`;
+
+                myTable.forEach((item, index, array) => {
+                    table +=
+                        `<tr class="table-success"> <td>${index+1}</td> 
+                            <td>${item.id}</td> 
+                             <td>${item.name}</td>
+                               <td>${item.maths}</td> 
+                                <td>${item.science}</td>
+                                  <td>${item.english}</td>
+                                    <td>${item.total}</td> 
+                                    <td>${item.average}</td> <td>${item.result}</td> 
+                                     <td id="update"><input type="button" id="update" value="edit" class="btn btn-warning"></td> 
+                                      <td id="delete"><input type="button" id="delete" class="btn btn-danger" value="delete" onClick="deleteRecord(${index})"></td> 
+                                       </tr>`;
+                });
+
+
+                table += `<table>`;
+                $('#display-table').html(table);
+            }
+
+            $('#maths-sort').click(function (e) {
+                // e.preventDefault();
+                $('#title1').fadeIn(0);
+                $('#title2, #title3, #title4').fadeOut(0);
+                getMathsArray.sort((p, q) => p.maths - q.maths);
+                displayTable(getMathsArray);
+            });
+
+            $('#science-sort').click(function (e) {
+                // e.preventDefault();
+                $('#title2').fadeIn(0);
+                $('#title1, #title3, #title4').fadeOut(0);
+
+                getMathsArray.sort((p, q) => p.science - q.science);
+                displayTable(getMathsArray);
+            });
+
+            $('#english-sort').click(function (e) {
+                e.preventDefault();
+                $('#title3').fadeIn(0);
+                $('#title2, #title4, #title1').fadeOut(0);
+                getMathsArray.sort((p, q) => p.english - q.english);
+                displayTable(getMathsArray);
+            });
+
+            $('#average-sort').click(function (e) {
+                e.preventDefault();
+                $('#title4').fadeIn(0);
+                $('#title2, #title1, #title3').fadeOut(0);
+                getMathsArray.sort((p, q) => p.average - q.average);
+                // another way
+                /*
+                getMathsArray.sort(function(p, q) { 
+                    return p.average - q.average
+                });
+                */
+                displayTable(getMathsArray);
+            });
+
+
+            $('#display-data').click(function (e) {
+                e.preventDefault();
+                $('#title2, #title1, #title3, #title4').fadeOut(0);
+                // getMathsArray = [];
+                // let average=0;
+                // for (i = 0; i < localStorage.length; i++) {
+
+                // let k1 = localStorage.key(i);
+                let getData = JSON.parse(localStorage.getItem('student-detail'));
+                // let total = Number(getData.maths) + Number(getData.science) + Number(getData.english);
+                // getData.total = total;
+                // getData.average = total / 3;
+                // getMathsArray.push(getData);
+                // }
+                displayTable(getMathsArray);
+
+            });
+
+            $('#update').click(function () {
+                alert('vhjghjhjh');
+                // for(let a=1;a<9;a++){
+                //     for(let b;b<10;b++){
+                //         localStorage.getItem(item.id);
+                //         localStorage.getItem(item.name);
+                //         localStorage.getItem(item.maths);
+                //         localStorage.getItem(item.science);
+                //         localStorage.getItem(item.english);
+                //         // localStorage.getItem(item.id);
+                //         // localStorage.getItem(item.id);
+                //     }
+                // }
+            });
+
+            $('#delete').click(function () {
+                confirm('Are you going to delete this record ?');
+                // if(true){
+                // localStorage.removeItem(index+1);
+                // window.location.href = "#";
+                // }
+                // else{
+                //     window.location.href = "#";
+                // }
+            });
+        });
+
+        function deleteRecord(index) {
+            // let ask = confirm('Are you going to delete this record ?');
+            // if (ask == true) {
+            //     let toBeRemoved = JSON.parse(localStorage.getItem('student-detail'));
+            //     toBeRemoved.splice(index, 1);
+            //     localStorage.setItem('student-detail', JSON.stringify(toBeRemoved));
+            //     // location.reload(); 
+            //     window.location.href = "#";
+            // }
+        }
+
+        function getFormData() {
+            let id = $('#id').val();
+            let name = $('#name').val();
+            let maths = $('#maths').val();
+            let science = $('#science').val();
+            let english = $('#english').val();
+            let total = +maths + +science + +english;
+            // let total = Number(maths)+ Number(science)+ Number(english);
+            let average = total / 3;
+            let result;
+            if (average >= 40) {
+                result = "Pass";
+            } else {
+                result = "Fail";
+            }
+
+            let studentObject = {};
+
+            studentObject.id = id;
+            studentObject.name = name;
+            studentObject.maths = maths;
+            studentObject.science = science;
+            studentObject.english = english;
+            studentObject.total = total;
+            studentObject.average = average;
+            studentObject.result = result;
+
+            return studentObject;
+        }
+
+        function deleteRecord(index) {
+            let toBeRemoved = JSON.parse(localStorage.getItem('student-detail'));
+            toBeRemoved.splice(index, 1);
+            localStorage.setItem('student-detail', JSON.stringify(toBeRemoved));
+            location.reload();
+        }
+    </script>
+</body>
+
+</html>

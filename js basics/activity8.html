@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <span id="span1"></span> <br>
+    <span id="span2"></span> <br>
+    <div id="Div"></div> 
+    <input type="submit" id="btn" value="Show data">
+<script src="jquery-3.6.0.min.js"></script>
+<script>
+    let s1={id:200,name:"Raja",maths:75,science:68,history:73};
+    let s2={id:201,name:"Kumar",maths:82,science:43,history:83};
+    let s3={id:203,name:"Bahee",maths:97,science:53,history:46};
+    let s4={id:204,name:"Priya",maths:70,science:51,history:69};
+    let s5={id:205,name:"Niruba",maths:84,science:38,history:43};
+    let s6={id:206,name:"Vishnu",maths:92,science:71,history:28};
+
+    localStorage.setItem('s1',JSON.stringify(s1));
+    localStorage.setItem('s2',JSON.stringify(s2));
+    localStorage.setItem('s3',JSON.stringify(s3));
+    localStorage.setItem('s4',JSON.stringify(s4));
+    localStorage.setItem('s5',JSON.stringify(s5));
+    localStorage.setItem('s6',JSON.stringify(s6));
+    // localStorage.clear();
+
+    $(document).ready(function(){
+        $('#btn').click(function(){
+
+            let tbl=`<table border=2><th>Student ID</th><th>Key</th><th>Student Name</th><th>Maths</th><th>Science</th><th>History</th>`;
+
+                for(let i=0;i<localStorage.length;i++){
+                    let key01=localStorage.key(i);
+                    let studentObject= JSON.parse(localStorage.getItem(key01));
+
+                    tbl+=`<tr><td>${studentObject.id}</td><td>${key01}</td><td>${studentObject.name}</td><td>${studentObject.maths}</td><td>${studentObject.science}</td><td>${studentObject.history}</td></tr>`;
+                }
+                tbl+=`</table>`;
+                $('#Div').html(tbl);
+        });
+    });
+</script>
+</body>
+</html>

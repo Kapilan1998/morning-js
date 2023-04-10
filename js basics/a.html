@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>JavaScript For In Loop</h2>
+<p>The for in statement loops through the properties of an object:</p>
+
+<p id="d5"></p>
+
+<script>
+let fruit={
+name:"apple",
+color:"oink",
+price:56.25
+};
+ let m="";
+ for(let i in fruit){
+ m += fruit[i];
+ }
+ 
+ document.getElementById("d5").innerHTML = m;
+</script>
+
+</body>
+</html>

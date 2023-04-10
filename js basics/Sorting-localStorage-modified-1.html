@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+    <table>
+        <tr>
+            <td>
+                <form action="" id="frm">
+                    <label for="id">Student ID</label>
+                    <input type="number" id="id" class="form-control" required> <br>
+                    <label for="name">Student Name</label>
+                    <input type="text" id="name" class="form-control" required> <br>
+                    <label for="maths">Maths marks</label>
+                    <input type="number" id="maths" class="form-control" required min="0" max="100"> <br>
+                    <label for="science">Science marks</label>
+                    <input type="number" id="science" class="form-control" required min="0" max="100"> <br>
+                    <label for="english">English marks</label>
+                    <input type="number" id="english" class="form-control" required min="0" max="100"> <br>
+                    <input type="submit" value="Save">
+                </form>
+            </td>
+
+            <td id="display-table"></td>
+
+        </tr>
+    </table>
+
+    <button id="display-data">Display</button>
+    <button id="maths-sort">sort by maths</button>
+    <button id="science-sort">sort by science</button>
+    <button id="english-sort">sort by english</button>
+    <button id="average-sort">sort by average</button>
+
+    <script src="jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            let initialValue = (localStorage.length) + 1;
+            let getMathsArray = [];
+            $('#frm').submit(function (e) {
+                e.preventDefault();
+                let formData = getFormData();
+
+                localStorage.setItem(initialValue, JSON.stringify(formData));
+                initialValue++;
+            });
+
+            function displayTable(myTable){
+                let table=`<table border=2>`;
+                    table+=`<tr> <th>Student ID</th> <th>Student Name</th> <th>Maths marks</th> <th>Science marks</th> <th>English marks</th> <th>Total</th> <th>Average</th> </tr>`;
+           
+                    myTable.map(detail => { 
+                        table += ` <td>${detail.id}</td>  <td>${detail.name}</td>  <td>${detail.maths}</td>  <td>${detail.science}</td>  <td>${detail.english}</td>  <td>${detail.total}</td> <td>${detail.average}</td>   </tr>`;
+                    });
+
+                    table +=`<table>`;
+                $('#display-table').html(table);
+                }
+
+            $('#maths-sort').click(function () {
+               
+                getMathsArray.sort((p, q) => p.maths - q.maths);
+                displayTable(getMathsArray);
+            });
+
+            $('#science-sort').click(function () {
+               
+               getMathsArray.sort((p, q) => p.science - q.science);
+               displayTable(getMathsArray);
+           });
+
+           $('#english-sort').click(function () {
+               
+               getMathsArray.sort((p, q) => p.english - q.english);
+               displayTable(getMathsArray);
+           });
+               
+           $('#average-sort').click(function () {
+               
+               getMathsArray.sort((p, q) => p.average - q.average);
+               /*
+               getMathsArray.sort(function(p, q) { 
+                   return p.average - q.average
+                });
+                */
+               displayTable(getMathsArray);
+           });
+
+
+            $('#display-data').click(function (e) {
+
+                getMathsArray = [];
+
+                for (i = 0; i < localStorage.length; i++) {
+
+                    let k1 = localStorage.key(i);
+                    let getData = JSON.parse(localStorage.getItem(k1));
+                    total = Number(getData.maths) + Number(getData.science) + Number(getData.english);
+                   getData.total = total;
+                   getData.average = total/3;
+                   getMathsArray.push(getData);
+                }
+                displayTable(getMathsArray);
+            });
+        });
+
+        function getFormData() {
+            let id = $('#id').val();
+            let name = $('#name').val();
+            let maths = $('#maths').val();
+            let science = $('#science').val();
+            let english = $('#english').val();
+
+            let studentObject = {};
+
+            studentObject.id = id;
+            studentObject.name = name;
+            studentObject.maths = maths;
+            studentObject.science = science;
+            studentObject.english = english;
+
+            return studentObject;
+        }
+
+    </script>
+</body>
+</html>

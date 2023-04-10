@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <h1>
+        <button onclick="change()">CHANGE HERE</button>
+
+        <p id="demo">I love cats. Cats are very easy to love. Cats are very popular.</p>
+    </h1>
+
+    <script>
+        function change() {
+            let m1 = document.getElementById("demo").innerHTML;
+            document.getElementById("demo").innerHTML = m1.replace("Cats", "CAT5");
+        }
+
+        let x1 = "hi i am kapilan";
+        document.write(x1);
+        document.write(x1.replace("kapilan", "1998"));
+    </script>
+
+</body>
+
+</html>

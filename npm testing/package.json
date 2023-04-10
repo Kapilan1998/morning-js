@@ -1,0 +1,22 @@
+{
+  "name": "npm-testing",
+  "version": "1.0.0",
+  "description": "morning node npm package testing",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "first",
+    "yarl",
+    "it",
+    "node"
+  ],
+  "author": "kapilan",
+  "license": "ISC",
+  "dependencies": {
+    "color": "^4.2.1",
+    "colors": "^1.4.0"
+  },
+  "devDependencies": {}
+}

@@ -1,0 +1,13 @@
+{
+  "name": "self-study-node",
+  "version": "1.0.0",
+  "description": "node js basic from jvl code",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"node app.js",          
+    "start-server":"node app.js"
+  },
+  "author": "kapilan",
+  "license": "ISC"
+}

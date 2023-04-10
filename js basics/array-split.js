@@ -20,3 +20,6 @@ console.log('joined');
 let name = mynameArr.join(''); //  Kaailnp       // array will be converted as string
 console.log(name);
 console.log(typeof name); //string
+
+// split function will convert into array
+// join function will convert into string
